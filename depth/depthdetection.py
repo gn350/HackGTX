@@ -2,6 +2,11 @@ import cv2
 import numpy as np
 import json
 
+import sys
+sys.path.append('../modelviewscripts/')
+
+from modelviewscripts import test
+
 detection = []
 
 def depthdetection():
@@ -20,7 +25,7 @@ def depthdetection():
     lower_saturation_close = 150
     upper_saturation_close = 255
 
-    cap = cv2.VideoCapture('depthlab_videos/pole_and_stuff.mp4')
+    cap = cv2.VideoCapture('depthlab_videos/pole_and_stuff.mp4')    
     count = 0
     numFramesNear = 0
     numFramesClose = 0
@@ -28,9 +33,15 @@ def depthdetection():
     closeObjectDetected = False
     scale = 2
 
+    # live video footage
+    cap_live = cv2.VideoCapture('C:\Users\gn747\Downloads\ccb_hallways.mp4')
+    count_live = 0;
+
     # Parse video frames
     while cap.isOpened():
         ret, frame = cap.read()
+
+        ret_live, frame_live = cap_live.read()
 
         if not ret:
             break
@@ -76,23 +87,26 @@ def depthdetection():
             print("left near")
             text = "Left, Near"
             detection = [1, 0, 0]
+            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
-                data = {"detection": [1, 0, 0]}
+                data = {"detection": [1, 0, 0], "object": item}
                 json.dump(data, json_file)
         elif (objectDetected and int(average_coordinates[1]) < center and not(closeObjectDetected)):
             print("center near")
             text = "Center, Near"
             detection = [0, 1, 0]
+            witem = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
-                data = {"detection": [0, 1, 0]}
+                data = {"detection": [0, 1, 0], "object": item}
                 json.dump(data, json_file)
         elif (objectDetected and not(closeObjectDetected)):
             print("right near")
             text = "Right, Near"
             detection = [0, 0, 1] 
+            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
-                data = {"detection": [0, 0, 1]}
-                json.dump(data, json_file)  
+                data = {"detection": [0, 0, 1], "object": item}
+                json.dump(data, json_file)
 
         if (numFramesNear == 25):
             objectDetected = True
@@ -115,22 +129,25 @@ def depthdetection():
             print("left close")
             text = "Left, Close"
             detection = [2, 0, 0]
+            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
-                data = {"detection": [2, 0, 0]}
+                data = {"detection": [2, 0, 0], "object": item}
                 json.dump(data, json_file)
         elif (objectDetected and int(average_coordinates[1]) < center):
             print("center close")
             text = "Center, Close"
             detection = [0, 2, 0]
+            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
-                data = {"detection": [0, 2, 0]}
+                data = {"detection": [0, 2, 0], "object": item}
                 json.dump(data, json_file)
         elif (objectDetected):
             print("right close")
             text = "Right, Close"
             detection = [0, 0, 2]
-            with open("depth/depth/data.json", "w") as json_file:
-                data = {"detection": [0, 0, 2]}
+            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
+            with open("depth/data.json", "w") as json_file:
+                data = {"detection": [0, 0, 2], "object": item}
                 json.dump(data, json_file)
 
         if (numFramesClose == 15):
@@ -154,6 +171,7 @@ def depthdetection():
 
         cv2.imshow('window-name', display_frame)
         count += 1
+        cap_live += 1
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
         
@@ -162,6 +180,7 @@ def depthdetection():
         #         json.dump(data, json_file)
 
     cap.release()
+    cap_live.release()
     cv2.destroyAllWindows()  # destroy all opened windows
 
     print("Video finished")
