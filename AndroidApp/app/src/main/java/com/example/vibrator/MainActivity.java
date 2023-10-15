@@ -2,14 +2,12 @@ package com.example.vibrator;
 
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.widget.TextView;
@@ -20,14 +18,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,9 +49,12 @@ public class MainActivity extends AppCompatActivity {
     // Input values
     private int[] data = new int[3]; // the data to be read in
 
+    public String dogImageUrl;
+
     public void request() {
         RequestQueue volleyQueue = Volley.newRequestQueue(MainActivity.this);
-        String url = "https://192.168.122.1:8000/";
+        //String url2 = "http://192.168.122.1:8000/";
+        String url = "http://192.168.205.144:8000/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 // we are using GET HTTP request method
@@ -67,11 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 // when the HTTP request succeeds
                 (Response.Listener<JSONObject>) response -> {
                     // get the image url from the JSON object
-                    String dogImageUrl;
                     try {
-                        dogImageUrl = response.getString("message");
+                        dogImageUrl = response.getString("detection");
                         // load the image into the ImageView using Glide.
-                        System.out.println(dogImageUrl);
+                        //System.out.println(dogImageUrl.get());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -87,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
         );
 
         volleyQueue.add(jsonObjectRequest);
+        String actualValue;
+        //ArrayList<Integer> array = new ArrayList<>();
+        //array.add((int) dogImageUrl.charAt(1));
+        //array.add((int) dogImageUrl.charAt(3));
+        //array.add((int) dogImageUrl.charAt(5));
+        //System.out.println(array);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +137,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // Get the action type
+                request();
+
+                data[0] = (int) dogImageUrl.charAt(1);
+                data[1] = (int) dogImageUrl.charAt(3);
+                data[2] = (int) dogImageUrl.charAt(5);
 
                 float x = event.getX();
                 float y = event.getY();

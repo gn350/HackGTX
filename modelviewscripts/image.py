@@ -9,8 +9,6 @@ threshold = 0.5
 
 frame = cv.imread(imagePath)
 results = model(frame)
-print (type(results))
-print (len(results))
 
 for result in results:
 
