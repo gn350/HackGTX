@@ -157,9 +157,9 @@ def depthdetection():
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
         
-        with open("data.json", "w") as json_file:
-                # data = {"detection": [0, 0, 0]}
-                json.dump(data, json_file)
+        # with open("data.json", "w") as json_file:
+        #         data = {"detection": [0, 0, 0]}
+        #         json.dump(data, json_file)
 
     cap.release()
     cv2.destroyAllWindows()  # destroy all opened windows
