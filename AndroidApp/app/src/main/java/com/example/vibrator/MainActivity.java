@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     // get the image url from the JSON object
                     try {
                         dogImageUrl = response.getString("detection");
+                        birdImageUrl = response.getString("item");
                         // load the image into the ImageView using Glide.
                         //System.out.println(dogImageUrl.get());
                     } catch (JSONException e) {
