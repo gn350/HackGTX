@@ -76,21 +76,21 @@ def depthdetection():
             print("left near")
             text = "Left, Near"
             detection = [1, 0, 0]
-            with open("data.json", "w") as json_file:
+            with open("depth/data.json", "w") as json_file:
                 data = {"detection": [1, 0, 0]}
                 json.dump(data, json_file)
         elif (objectDetected and int(average_coordinates[1]) < center and not(closeObjectDetected)):
             print("center near")
             text = "Center, Near"
             detection = [0, 1, 0]
-            with open("data.json", "w") as json_file:
+            with open("depth/data.json", "w") as json_file:
                 data = {"detection": [0, 1, 0]}
                 json.dump(data, json_file)
         elif (objectDetected and not(closeObjectDetected)):
             print("right near")
             text = "Right, Near"
             detection = [0, 0, 1] 
-            with open("data.json", "w") as json_file:
+            with open("depth/data.json", "w") as json_file:
                 data = {"detection": [0, 0, 1]}
                 json.dump(data, json_file)  
 
@@ -115,21 +115,21 @@ def depthdetection():
             print("left close")
             text = "Left, Close"
             detection = [2, 0, 0]
-            with open("data.json", "w") as json_file:
+            with open("depth/data.json", "w") as json_file:
                 data = {"detection": [2, 0, 0]}
                 json.dump(data, json_file)
         elif (objectDetected and int(average_coordinates[1]) < center):
             print("center close")
             text = "Center, Close"
             detection = [0, 2, 0]
-            with open("data.json", "w") as json_file:
+            with open("depth/data.json", "w") as json_file:
                 data = {"detection": [0, 2, 0]}
                 json.dump(data, json_file)
         elif (objectDetected):
             print("right close")
             text = "Right, Close"
             detection = [0, 0, 2]
-            with open("data.json", "w") as json_file:
+            with open("depth/depth/data.json", "w") as json_file:
                 data = {"detection": [0, 0, 2]}
                 json.dump(data, json_file)
 
@@ -157,7 +157,7 @@ def depthdetection():
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
         
-        # with open("data.json", "w") as json_file:
+        # with open("depth/data.json", "w") as json_file:
         #         data = {"detection": [0, 0, 0]}
         #         json.dump(data, json_file)
 
