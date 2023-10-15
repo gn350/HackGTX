@@ -2,7 +2,7 @@ import cv2 as cv
 from ultralytics import YOLO
 
 def imageDetect(image, pointx, pointy):
-    modelPath = "modelviewscripts/test.py"
+    modelPath = "modelviewscripts/brave.pt"
 
     model = YOLO(modelPath)
     threshold = 0.5
