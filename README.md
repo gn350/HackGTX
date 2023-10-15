@@ -17,7 +17,7 @@ Scout’s computer vision algorithm then processes the output of these two artif
 
 Our team trained Scout with two Python artificial intelligence models: the YOLO8 algorithm for real-time object detection and the MiDaS algorithm to create a depth map for distance estimation.  These models were trained over the course of the weekend using Google Cloud and Google Colab.  Our team also developed a computer vision algorithm using OpenCV in Python to determine the closest object to the user.
 
-The mobile interface, haptic feedback, and audio signals were developed in Android Studio. 
+The mobile interface, haptic feedback, and audio signals were developed in Android Studio, and depth calculations were explored using Google Depth Lab API. 
 Real-time video streaming and processing was developed using OpenCV and IP Webcam. 
 
 Finally, results were synchronized and connected back to the mobile interface via FastAPI. 
