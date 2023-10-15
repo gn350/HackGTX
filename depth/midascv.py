@@ -7,7 +7,7 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 # Download the MiDaS
 midas = torch.hub.load('intel-isl/MiDaS', 'MiDaS_small')
-midas.to('device')
+midas.to(device)
 midas.eval()
 # Input transformation pipeline
 transforms = torch.hub.load('intel-isl/MiDaS', 'transforms')
@@ -20,7 +20,7 @@ while cap.isOpened():
 
     # Transform input for midas 
     img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    imgbatch = transform(img).to('device')
+    imgbatch = transform(img).to(device)
 
     # Make a prediction
     with torch.no_grad(): 
