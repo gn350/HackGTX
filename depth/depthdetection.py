@@ -3,7 +3,7 @@ import numpy as np
 import json
 
 import sys
-sys.path.append('../modelviewscripts/')
+sys.path.append('../')
 
 from modelviewscripts import test
 
@@ -34,7 +34,7 @@ def depthdetection():
     scale = 2
 
     # live video footage
-    cap_live = cv2.VideoCapture('C:\Users\gn747\Downloads\ccb_hallways.mp4')
+    cap_live = cv2.VideoCapture('C:/Users/gn747/Downloads/ccb_hallways.mp4')
     count_live = 0;
 
     # Parse video frames
@@ -171,7 +171,7 @@ def depthdetection():
 
         cv2.imshow('window-name', display_frame)
         count += 1
-        cap_live += 1
+        count_live += 1
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
         
