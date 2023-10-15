@@ -1,4 +1,7 @@
 # HackGTX
+Scout empowers visually impaired individuals through an AI-based mobile app, delivering haptic feedback for seamless journeying from place to place.
+
+
 ## Inspiration
 Our team was shocked at the lack of solutions for visually impaired individuals to effectively navigate crowded public spaces.  Aids, such as a seeing-eye dog, are highly useful but they can be restrictive and costly, and are thereby inaccessible to nearly 95 percent of the visually impaired population.
 
@@ -12,7 +15,7 @@ Scout’s computer vision algorithm then processes the output of these two artif
 
 ## How we built it
 
-Our team trained Scout with two Python artificial intelligence models: the YOLO8 algorithm for real-time object detection and the MiDaS algorithm to create a depth map for distance estimation.  We also developed a computer vision algorithm using OpenCV in Python to determine the closest object to the user.
+Our team trained Scout with two Python artificial intelligence models: the YOLO8 algorithm for real-time object detection and the MiDaS algorithm to create a depth map for distance estimation.  These models were trained over the course of the weekend using Google Cloud and Google Colab.  Our team also developed a computer vision algorithm using OpenCV in Python to determine the closest object to the user.
 
 The mobile interface, haptic feedback, and audio signals were developed in Android Studio. 
 Real-time video streaming and processing was developed using OpenCV and IP Webcam. 
