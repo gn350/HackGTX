@@ -1,5 +1,6 @@
 package com.example.vibrator;
 
+
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,16 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.widget.TextView;
 import android.view.MotionEvent;
+import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +49,45 @@ public class MainActivity extends AppCompatActivity {
     // Input values
     private int[] data = new int[3]; // the data to be read in
 
+    public void request() {
+        RequestQueue volleyQueue = Volley.newRequestQueue(MainActivity.this);
+        String url = "https://192.168.122.1:8000/";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                // we are using GET HTTP request method
+                Request.Method.GET,
+                // url we want to send the HTTP request to
+                url,
+                // this parameter is used to send a JSON object to the
+                // server, since this is not required in our case,
+                // we are keeping it `null`
+                null,
+
+                // lambda function for handling the case
+                // when the HTTP request succeeds
+                (Response.Listener<JSONObject>) response -> {
+                    // get the image url from the JSON object
+                    String dogImageUrl;
+                    try {
+                        dogImageUrl = response.getString("message");
+                        // load the image into the ImageView using Glide.
+                        System.out.println(dogImageUrl);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+
+                (Response.ErrorListener) error -> {
+                    // make a Toast telling the user
+                    // that something went wrong
+                    Toast.makeText(MainActivity.this, "Some error occurred! Cannot fetch dog image", Toast.LENGTH_LONG).show();
+                    // log the error message in the error stream
+                    Log.e("MainActivity", error.toString());
+                }
+        );
+
+        volleyQueue.add(jsonObjectRequest);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
         }
         vibrating = !vibrating;
     }
-
 
     class VibrateRunnable implements Runnable {
         int distance; // 0, 1, or 2
