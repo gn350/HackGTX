@@ -14,18 +14,19 @@ def depthdetection():
 
     # Define bounds of color range to detect in HSV
     # Near object
-    lower_hue_near = -10
-    upper_hue_near = 9
-    lower_saturation_near = 150
+    # Near object
+    lower_hue_near = 40
+    upper_hue_near = 63
+    lower_saturation_near = 100
     upper_saturation_near = 255
 
     # Close object
-    lower_hue_close = -10
-    upper_hue_close = 4
-    lower_saturation_close = 150
+    lower_hue_close = 40
+    upper_hue_close = 58
+    lower_saturation_close = 100
     upper_saturation_close = 255
 
-    cap = cv2.VideoCapture('depthlab_videos/pole_and_stuff.mp4')    
+    cap = cv2.VideoCapture('C:/Users/gn747/Downloads/ooo.mp4')    
     count = 0
     numFramesNear = 0
     numFramesClose = 0
@@ -87,7 +88,7 @@ def depthdetection():
             print("left near")
             text = "Left, Near"
             detection = [1, 0, 0]
-            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
+            item = test.imageDetect(frame_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
                 data = {"detection": [1, 0, 0], "object": item}
                 json.dump(data, json_file)
@@ -95,7 +96,7 @@ def depthdetection():
             print("center near")
             text = "Center, Near"
             detection = [0, 1, 0]
-            witem = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
+            witem = test.imageDetect(frame_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
                 data = {"detection": [0, 1, 0], "object": item}
                 json.dump(data, json_file)
@@ -103,7 +104,7 @@ def depthdetection():
             print("right near")
             text = "Right, Near"
             detection = [0, 0, 1] 
-            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
+            item = test.imageDetect(frame_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
                 data = {"detection": [0, 0, 1], "object": item}
                 json.dump(data, json_file)
@@ -129,7 +130,7 @@ def depthdetection():
             print("left close")
             text = "Left, Close"
             detection = [2, 0, 0]
-            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
+            item = test.imageDetect(frame_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
                 data = {"detection": [2, 0, 0], "object": item}
                 json.dump(data, json_file)
@@ -137,7 +138,7 @@ def depthdetection():
             print("center close")
             text = "Center, Close"
             detection = [0, 2, 0]
-            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
+            item = test.imageDetect(frame_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
                 data = {"detection": [0, 2, 0], "object": item}
                 json.dump(data, json_file)
@@ -145,7 +146,7 @@ def depthdetection():
             print("right close")
             text = "Right, Close"
             detection = [0, 0, 2]
-            item = test.imageDetect(cap_live, int(average_coordinates[1]), int(average_coordinates[0]))
+            item = test.imageDetect(frame_live, int(average_coordinates[1]), int(average_coordinates[0]))
             with open("depth/data.json", "w") as json_file:
                 data = {"detection": [0, 0, 2], "object": item}
                 json.dump(data, json_file)
